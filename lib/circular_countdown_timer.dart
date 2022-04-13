@@ -2,6 +2,7 @@ library circular_countdown_timer;
 
 import 'package:flutter/material.dart';
 import 'custom_timer_painter.dart';
+typedef TimeCallback = Function(Duration elapsedTime);
 
 /// Create a Circular Countdown Timer.
 class CircularCountDownTimer extends StatefulWidget {
@@ -31,6 +32,9 @@ class CircularCountDownTimer extends StatefulWidget {
 
   /// This Callback will execute when the Countdown Starts.
   final VoidCallback? onStart;
+
+  /// This Callback will execute when the Countdown is changed.
+  final TimeCallback? onChange;
 
   /// Countdown duration in Seconds.
   final int duration;
@@ -86,6 +90,7 @@ class CircularCountDownTimer extends StatefulWidget {
       this.isReverseAnimation = false,
       this.onComplete,
       this.onStart,
+      this.onChange,
       this.strokeWidth = 5.0,
       this.strokeCap = StrokeCap.butt,
       this.textStyle,
@@ -105,6 +110,7 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
     with TickerProviderStateMixin {
   AnimationController? _controller;
   Animation<double>? _countDownAnimation;
+  Duration? elapsedTime;
 
   String get time {
     if (widget.isReverse && _controller!.isDismissed) {
@@ -228,6 +234,17 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
         default:
         // Do nothing
       }
+    });
+
+    _controller!.addListener(() {
+      if(elapsedTime == null){
+        elapsedTime = _controller!.duration! * _controller!.value;
+      }
+      Duration duration = _controller!.duration! * _controller!.value;
+      if(duration.inSeconds != elapsedTime!.inSeconds ){
+        widget.onChange!(duration);
+      }
+      elapsedTime = duration;
     });
 
     _setAnimation();

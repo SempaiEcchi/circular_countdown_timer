@@ -41,6 +41,9 @@ CircularCountDownTimer(
      onComplete: () {
          debugPrint('Countdown Ended');
      },
+     onChange: (Duration elapsedTime) {
+         print('Countdown change $elapsedTime');
+     },
  );
 ```
 
@@ -69,6 +72,7 @@ CircularCountDownTimer(
 |`autoStart`|`bool`|true|*Handles the timer start.*|
 |`onStart`|`VoidCallback`|null|*This Callback will execute when the Countdown Starts.*|
 |`onComplete`|`VoidCallback`|null|*This Callback will execute when the Countdown Ends.*|
+|`onChange`|`TimeCallback`|null|*This Callback will execute when the Countdown is changed.*|
 
 ## Demo
 
