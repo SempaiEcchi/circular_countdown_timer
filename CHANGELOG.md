@@ -1,4 +1,4 @@
-## [0.2.1] - Ago 16 2021.
+## [0.2.2] - Apr 13 2022.
 
 * Added Optional Parameter:
     * TimeCallback named **onChange** which will execute when the Countdown is changed.

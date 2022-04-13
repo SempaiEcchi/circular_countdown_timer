@@ -2,6 +2,7 @@ library circular_countdown_timer;
 
 import 'package:flutter/material.dart';
 import 'custom_timer_painter.dart';
+
 typedef TimeCallback = Function(Duration elapsedTime);
 
 /// Create a Circular Countdown Timer.
@@ -237,12 +238,14 @@ class CircularCountDownTimerState extends State<CircularCountDownTimer>
     });
 
     _controller!.addListener(() {
-      if(elapsedTime == null){
+      if (elapsedTime == null) {
         elapsedTime = _controller!.duration! * _controller!.value;
       }
       Duration duration = _controller!.duration! * _controller!.value;
-      if(duration.inSeconds != elapsedTime!.inSeconds ){
-        widget.onChange!(duration);
+      if (duration.inSeconds != elapsedTime!.inSeconds) {
+        if (widget.onChange != null) {
+          widget.onChange!(duration);
+        }
       }
       elapsedTime = duration;
     });
